@@ -6,33 +6,103 @@
   <script id="challenge">
     // 👉 CHALLENGE 1
     function profileActivation(profile, reason) {
-
+      if (profile.active === false && profile.reason === undefined) {
+        return "confirm status manually"
+      }
+      if (profile.active === true && profile.reason !== undefined) {
+        return "confirm status manually"
+      }
+      if(profile.active){
+      profile.active = false 
+        profile.reason = reason 
+      }else {
+        profile.active = true
+        delete profile.reason
+      }
+      return profile
     }
 
     // 👉 CHALLENGE 2
     function mineSweeper(grid, x, y) {
-
+    if(x < 1 || x > 3 || y < 1 || y > 3) 
+    return "invalid coordinates"
+      if (grid [y] [x] === "🟦") {
+        return "🟦 🥳"
+      }
+      if (grid [y] [x] === "🟥") {
+        return "🟥 💀"
+      }
     }
 
     // 👉 CHALLENGE 3
     function booleanize(obj) {
-
+      var newObj = {};
+    for (var key in obj) {
+      if (key.length > 9) {
+        return "shorten all prop names to 9 chars or less";
+      }
+      var value = obj[key];
+      if (value === 0) {
+        newObj[key] = false;
+      } else if (value === 1) {
+        newObj[key] = true;
+      } else if (value === null) {
+        continue; // Skip null values
+      } else {
+        newObj[key] = value;
+      }
+    }
+    return newObj;
     }
 
     // 👉 CHALLENGE 4
     function scrub(text, forbidden) {
+      if (text === "" || forbidden.length === 0) {
+      return text; // Return original text if it's empty or there are no forbidden words
+    }
 
+    // Create a regular expression to match any of the forbidden words
+    var regex = new RegExp(forbidden.join("|"), "gi");
+
+    // Replace each forbidden word with a string of "x" characters of equal length
+    var scrubbedText = text.replace(regex, function(match) {
+      return "x".repeat(match.length);
+    });
+
+    return scrubbedText;
     }
 
     // 👉 CHALLENGE 5 (bonus, NOT graded)
     function normalizePhoneNumber(num) {
+      if (num.length !== 10) {
+        return 'Invalid phone number'
+      }
+      let areaCode = num.slice(0, 3)
+      let prefix = num.slice(3, 6)
+      let lineNumber = num.slice(6, 10)
 
+      return '(' + areaCode + ') ' + prefix + '-' + lineNumber
     }
 
     // 👉 CHALLENGE 6 (bonus, NOT graded)
     function diceRolls() {
-
+      return Math.floor(Math.random() * 6) + 1;
     }
+    function simulateRolls() {
+      let consecutiveSixes = 0;
+      let rolls = 0;
+      while (consecutiveSixes < 3) {
+        const roll = diceRolls();
+        rolls++;
+        if (roll === 6) {
+          consecutiveSixes++;
+        } else {
+          consecutiveSixes = 0;
+        }
+      }
+      document.getElementById('result').innerText = `It took ${rolls} rolls to get three sixes in a row`
+    }
+    
 
     // 🧪 DO NOT make any changes below this line ===================
     globalThis.challengeVersion = 1
