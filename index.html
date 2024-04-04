@@ -6,21 +6,22 @@
   <script id="challenge">
     // 👉 CHALLENGE 1
     function profileActivation(profile, reason) {
-      if (profile.active === false && profile.reason === undefined) {
-        return "confirm status manually"
-      }
-      if (profile.active === true && profile.reason !== undefined) {
-        return "confirm status manually"
-      }
-      if(profile.active){
-      profile.active = false 
-        profile.reason = reason 
-      }else {
-        profile.active = true
-        delete profile.reason
-      }
-      return profile
+      if (profile.active === false && profile.reason === null) {
+        return "confirm status manually";
     }
+    if (profile.active === true && (profile.reason != null || reason == null)) { 
+      return "confirm status manually";
+    }
+
+    if(profile.active) {
+      profile.active = false;
+      profile.reason = reason;
+    } else {
+      profile.active = true;
+      delete profile.reason;
+    }
+    return profile;
+}
 
     // 👉 CHALLENGE 2
     function mineSweeper(grid, x, y) {
